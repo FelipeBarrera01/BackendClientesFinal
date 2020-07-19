@@ -1,0 +1,54 @@
+package com.springboot.backendclientes.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity
+@Table(name = "facturas_items")
+public class ItemFactura implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	private Integer cantidad;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties({"clientes"})
+	private Producto producto;
+	
+	public Double getImporte() {
+		return cantidad.doubleValue()*producto.getPrecio();	
+	}
+	public long getId() {
+		return id;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+
+	private static final long serialVersionUID = 1L;
+
+	
+}
